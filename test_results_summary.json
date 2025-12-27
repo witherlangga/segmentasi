@@ -1,0 +1,42 @@
+{
+  "0003_0016.JPG": {
+    "short_conclusion": "Prediksi: Kurang sehat (68.11%). Dominan: Daun Sehat (Hijau).",
+    "rf": {
+      "label": "Kurang sehat",
+      "prob": 68.11
+    },
+    "dominant_status": "Daun Sehat (Hijau)"
+  },
+  "0003_0059.JPG": {
+    "short_conclusion": "Prediksi: Sehat (52.78%). Dominan: Daun Sehat (Hijau).",
+    "rf": {
+      "label": "Sehat",
+      "prob": 52.78
+    },
+    "dominant_status": "Daun Sehat (Hijau)"
+  },
+  "0011_0094.JPG": {
+    "short_conclusion": "Prediksi: Sehat (55.63%). Dominan: Daun Sehat (Hijau).",
+    "rf": {
+      "label": "Sehat",
+      "prob": 55.63
+    },
+    "dominant_status": "Daun Sehat (Hijau)"
+  },
+  "0014_0186.JPG": {
+    "short_conclusion": "Prediksi: Sakit (67.17%). Dominan: Daun Sedikit Sakit (Kuning).",
+    "rf": {
+      "label": "Sakit",
+      "prob": 67.17
+    },
+    "dominant_status": "Daun Sedikit Sakit (Kuning)"
+  },
+  "0022_0027.JPG": {
+    "short_conclusion": "Prediksi: Sakit (75.47%). Dominan: Daun Sehat (Hijau).",
+    "rf": {
+      "label": "Sakit",
+      "prob": 75.47
+    },
+    "dominant_status": "Daun Sehat (Hijau)"
+  }
+}

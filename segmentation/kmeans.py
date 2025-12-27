@@ -253,3 +253,4 @@ def segment_leaf(image_path, K=10):
         "conclusion": conclusion,
         "short_conclusion": short_conclusion
     }
+
