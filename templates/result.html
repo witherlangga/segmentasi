@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hasil Segmentasi Daun</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f3f4f6;
+        margin: 0;
+        padding: 40px 0;
+        color: #1f2937;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 18px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 40px;
+      }
+
+      h2 {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        border-left: 6px solid #16a34a;
+        padding-left: 12px;
+        font-size: 22px;
+      }
+
+      .image-section {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+      }
+
+      .image-card {
+        background: #f9fafb;
+        padding: 20px;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: inset 0 0 0 1px #e5e7eb;
+      }
+
+      .image-card img {
+        max-width: 100%;
+        border-radius: 10px;
+      }
+
+      .cluster-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 20px;
+      }
+
+      .cluster-card {
+        background: #f9fafb;
+        padding: 15px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: inset 0 0 0 1px #e5e7eb;
+      }
+
+      .cluster-card img {
+        width: 100%;
+        border-radius: 8px;
+      }
+
+      .cluster-card h4 {
+        margin: 10px 0 4px;
+      }
+
+      .cluster-card p {
+        font-size: 14px;
+        color: #4b5563;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+
+      th {
+        background: #16a34a;
+        color: white;
+        padding: 12px;
+      }
+
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: center;
+      }
+
+      tr:nth-child(even) {
+        background: #f9fafb;
+      }
+
+      .chart-card {
+        margin-top: 30px;
+        padding: 25px;
+        background: #f9fafb;
+        border-radius: 16px;
+        box-shadow: inset 0 0 0 1px #e5e7eb;
+        display: flex;
+        justify-content: center;
+      }
+
+      .chart-card img {
+        max-width: 100%;
+        border-radius: 12px;
+      }
+
+      .back {
+        margin-top: 60px;
+        text-align: center;
+      }
+
+      .back a {
+        padding: 14px 30px;
+        background: #16a34a;
+        color: white;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .divider {
+        margin: 60px 0;
+        border-top: 2px dashed #d1d5db;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Hasil Segmentasi Daun</h1>
+      <p class="subtitle">
+        Metode K-Means Clustering & Analisis Warna
+      </p>
+
+      {% for item in results %}
+      <h2>Hasil untuk Gambar: {{ item.original }}</h2>
+
+      <div class="image-section">
+        <div class="image-card">
+          <h3>Gambar Asli</h3>
+          <img src="{{ url_for('static', filename=item.original) }}" />
+        </div>
+
+        <div class="image-card">
+          <h3>Hasil Segmentasi</h3>
+          <img src="{{ url_for('static', filename=item.result) }}" />
+        </div>
+      </div>
+
+      <p style="text-align:center;font-weight:600;margin-top:30px;">
+        Jumlah Cluster (K): {{ k }}
+      </p>
+
+      <h2>Hasil Setiap Cluster</h2>
+      <div class="cluster-grid">
+        {% for cluster in item.clusters %}
+        <div class="cluster-card">
+          <img src="{{ url_for('static', filename=cluster.path) }}" />
+          <h4>Cluster {{ cluster.index }}</h4>
+          <p><strong>Rule-based:</strong> {{ cluster.rule_description }}</p>
+          <p><strong>Random Forest:</strong> {{ cluster.rf_text }}</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <h2>Data Numerik</h2>
+      <table>
+        <tr>
+          <th>Cluster</th>
+          <th>Centroid</th>
+          <th>Piksel</th>
+          <th>%</th>
+          <th>Keterangan</th>
+        </tr>
+        {% for d in item.numeric_data %}
+        <tr>
+          <td>{{ d.cluster }}</td>
+          <td>{{ d.centroid }}</td>
+          <td>{{ d.pixel_count }}</td>
+          <td>{{ d.percentage }}%</td>
+          <td>{{ d.rule_description }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Grafik Distribusi</h2>
+      <div class="chart-card">
+        <img src="{{ url_for('static', filename=item.bar_chart) }}" />
+      </div>
+
+      <h2>Kesimpulan Per-Daun</h2>
+      <div style="background:#f9fafb;padding:18px;border-radius:12px;margin-top:12px;text-align:center;">
+        <p style="margin:0;font-weight:700;color:#111827;">{{ item.short_conclusion }}</p>
+      </div>
+
+      <div class="divider"></div>
+      {% endfor %}
+
+      {% if comparison %}
+      <h2>Perbandingan Antar Daun</h2>
+      <div style="background:#f9fafb;padding:18px;border-radius:12px;margin-top:12px;">
+        <p style="margin:0;font-weight:700;">{{ comparison.majority }}</p>
+        <table style="margin-top:12px;">
+          <tr>
+            <th>Kelas</th>
+            <th>Jumlah</th>
+            <th>%</th>
+            <th>Avg Prob</th>
+          </tr>
+          {% for b in comparison.breakdown %}
+          <tr>
+            <td>{{ b.label }}</td>
+            <td>{{ b.count }}</td>
+            <td>{{ b.percent }}%</td>
+            <td>{{ b.avg_prob }}%</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% endif %}
+
+      <div class="back">
+        <a href="/">Upload Gambar Lain</a>
+      </div>
+    </div>
+  </body>
+</html>

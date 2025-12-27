@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Segmentasi Daun - K-Means</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: linear-gradient(135deg, #e8f3e5, #f3f7f2);
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 760px;
+        margin: 80px auto;
+        padding: 45px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 6px;
+        font-weight: 600;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+
+      .upload-box {
+        border: 2px dashed #16a34a;
+        border-radius: 16px;
+        padding: 55px 20px;
+        text-align: center;
+        cursor: pointer;
+        color: #16a34a;
+        font-weight: 500;
+        transition: 0.3s;
+        background: #f9fafb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .upload-box:hover {
+        background: #ecfdf3;
+        border-color: #15803d;
+      }
+
+      .upload-box input {
+        display: none;
+      }
+
+      #fileName {
+        font-size: 16px;
+      }
+
+      .form-group {
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      input[type="number"] {
+        margin-top: 8px;
+        padding: 10px;
+        width: 110px;
+        text-align: center;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        font-size: 15px;
+      }
+
+      .btn {
+        margin-top: 40px;
+        padding: 16px 36px;
+        background: #16a34a;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background: #15803d;
+        transform: translateY(-2px);
+      }
+
+      .note {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 13px;
+        color: #6b7280;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Segmentasi Daun</h1>
+      <p class="subtitle">
+        Deteksi Daun Sehat dan Berpenyakit<br />
+        menggunakan <b>K-Means Clustering</b>
+      </p>
+
+      <form method="POST" enctype="multipart/form-data">
+        <label class="upload-box">
+          <input
+            type="file"
+            name="images[]"
+            id="imageInput"
+            accept="image/*"
+            multiple
+            required
+            onchange="showFileName()"
+          />
+          <span id="fileName">Klik untuk memilih gambar daun</span>
+        </label>
+
+        <div class="form-group">
+          <label>
+            Jumlah Cluster (K)
+            <br />
+            <input type="number" name="k" min="2" max="15" value="10" required />
+          </label>
+        </div>
+
+        <div style="text-align: center">
+          <button type="submit" class="btn">Proses Segmentasi</button>
+        </div>
+      </form>
+
+      <p class="note">
+        Format gambar: JPG, JPEG, PNG<br />
+        Anda dapat memilih lebih dari satu gambar sekaligus
+      </p>
+    </div>
+
+    <script>
+      function showFileName() {
+        const input = document.getElementById("imageInput");
+        const fileName = document.getElementById("fileName");
+
+        if (input.files.length === 0) {
+          fileName.textContent = "Klik untuk memilih gambar daun";
+        } else if (input.files.length === 1) {
+          fileName.textContent = input.files[0].name;
+        } else {
+          fileName.textContent =
+            input.files.length + " gambar dipilih";
+        }
+      }
+    </script>
+  </body>
+</html>
