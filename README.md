@@ -52,7 +52,7 @@
 - Bar chart: `static/results/bar_<filename>.png`
 - Model: rf_leaf.pkl
 - Mapping label: label_mapping.json
-- Laporan & metadata: `preprocess_check.json`, `training_info.json`, test_results_summary.json, Implementasi_dan_Hasil_BAB_IV.docx (generate_report)
+- Laporan & metadata: `preprocess_check.json`, `training_info.json`, test_results_summary.json dan Implementasi
 
 ---
 
